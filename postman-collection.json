@@ -1,0 +1,137 @@
+{
+  "info": {
+    "name": "Obiri HR System API",
+    "description": "Complete API collection for Departments, Employees, and Leave Requests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000/api" },
+    { "key": "deptId", "value": "" },
+    { "key": "empId", "value": "" },
+    { "key": "leaveId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Departments",
+      "item": [
+        {
+          "name": "Create Department",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.collectionVariables.set('deptId', pm.response.json().id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"name\":\"Engineering\",\"description\":\"Software Engineering\"}" },
+            "url": { "raw": "{{baseUrl}}/departments", "host": ["{{baseUrl}}"], "path": ["departments"] }
+          }
+        },
+        {
+          "name": "List Departments",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/departments", "host": ["{{baseUrl}}"], "path": ["departments"] } }
+        },
+        {
+          "name": "Get Department by ID",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/departments/{{deptId}}", "host": ["{{baseUrl}}"], "path": ["departments","{{deptId}}"] } }
+        },
+        {
+          "name": "Update Department",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"description\":\"Updated description\"}" },
+            "url": { "raw": "{{baseUrl}}/departments/{{deptId}}", "host": ["{{baseUrl}}"], "path": ["departments","{{deptId}}"] }
+          }
+        },
+        {
+          "name": "Delete Department",
+          "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/departments/{{deptId}}", "host": ["{{baseUrl}}"], "path": ["departments","{{deptId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "Employees",
+      "item": [
+        {
+          "name": "Create Employee",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.collectionVariables.set('empId', pm.response.json().id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"firstName\":\"Alice\",\"lastName\":\"Johnson\",\"email\":\"alice@obiri.com\",\"position\":\"Developer\",\"salary\":80000,\"departmentId\":\"{{deptId}}\"}" },
+            "url": { "raw": "{{baseUrl}}/employees", "host": ["{{baseUrl}}"], "path": ["employees"] }
+          }
+        },
+        {
+          "name": "List Employees",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/employees", "host": ["{{baseUrl}}"], "path": ["employees"] } }
+        },
+        {
+          "name": "Get Employee by ID",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/employees/{{empId}}", "host": ["{{baseUrl}}"], "path": ["employees","{{empId}}"] } }
+        },
+        {
+          "name": "Update Employee",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"position\":\"Senior Developer\",\"salary\":95000}" },
+            "url": { "raw": "{{baseUrl}}/employees/{{empId}}", "host": ["{{baseUrl}}"], "path": ["employees","{{empId}}"] }
+          }
+        },
+        {
+          "name": "Assign Department",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"departmentId\":\"{{deptId}}\"}" },
+            "url": { "raw": "{{baseUrl}}/employees/{{empId}}/assign-department", "host": ["{{baseUrl}}"], "path": ["employees","{{empId}}","assign-department"] }
+          }
+        },
+        {
+          "name": "Delete Employee",
+          "request": { "method": "DELETE", "url": { "raw": "{{baseUrl}}/employees/{{empId}}", "host": ["{{baseUrl}}"], "path": ["employees","{{empId}}"] } }
+        }
+      ]
+    },
+    {
+      "name": "Leave Requests",
+      "item": [
+        {
+          "name": "Submit Leave Request",
+          "event": [{ "listen": "test", "script": { "exec": ["pm.collectionVariables.set('leaveId', pm.response.json().id);"] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"employeeId\":\"{{empId}}\",\"startDate\":\"2026-07-01\",\"endDate\":\"2026-07-05\",\"reason\":\"Annual vacation\"}" },
+            "url": { "raw": "{{baseUrl}}/leave-requests", "host": ["{{baseUrl}}"], "path": ["leave-requests"] }
+          }
+        },
+        {
+          "name": "List Leave Requests",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/leave-requests", "host": ["{{baseUrl}}"], "path": ["leave-requests"] } }
+        },
+        {
+          "name": "Get Leave Request Status",
+          "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/leave-requests/{{leaveId}}/status", "host": ["{{baseUrl}}"], "path": ["leave-requests","{{leaveId}}","status"] } }
+        },
+        {
+          "name": "Approve Leave Request",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"approverId\":\"{{empId}}\",\"comment\":\"Approved\"}" },
+            "url": { "raw": "{{baseUrl}}/leave-requests/{{leaveId}}/approve", "host": ["{{baseUrl}}"], "path": ["leave-requests","{{leaveId}}","approve"] }
+          }
+        },
+        {
+          "name": "Reject Leave Request",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\"approverId\":\"{{empId}}\",\"comment\":\"Scheduling conflict\"}" },
+            "url": { "raw": "{{baseUrl}}/leave-requests/{{leaveId}}/reject", "host": ["{{baseUrl}}"], "path": ["leave-requests","{{leaveId}}","reject"] }
+          }
+        }
+      ]
+    }
+  ]
+}

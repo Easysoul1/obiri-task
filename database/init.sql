@@ -1,0 +1,3 @@
+-- NOTE: SQLite is now used for development (no server needed).
+-- Tables and indexes are created automatically by TypeORM's
+-- synchronize feature. No init script is required.

@@ -1,0 +1,6 @@
+# NOTE: PostgreSQL has been replaced with SQLite for development.
+# SQLite is file-based — no server needed. The database file (obiri.db)
+# is created automatically by TypeORM when the backend starts.
+# 
+# To switch back to PostgreSQL: restore this file, run `docker compose up -d`,
+# and change backend/src/app.module.ts to use `type: 'postgres'`.
