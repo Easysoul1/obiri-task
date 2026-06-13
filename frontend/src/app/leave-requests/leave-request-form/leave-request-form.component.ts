@@ -11,17 +11,17 @@ import { Employee } from '../../models/employee.model';
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   template: `
-    <div class="container">
+    <div class="container page-enter">
+      <a routerLink="/leave-requests" class="back-link">← Back to Leave Requests</a>
       <h1>New Leave Request</h1>
-      <a routerLink="/leave-requests" class="back-link">&larr; Back to Leave Requests</a>
 
-      <div *ngIf="error" class="error">{{ error }}</div>
+      <div *ngIf="error" class="state-msg error" style="margin-bottom:var(--space-lg);text-align:left;">{{ error }}</div>
 
-      <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()" class="form">
+      <form [formGroup]="leaveForm" (ngSubmit)="onSubmit()" class="form-card">
         <div class="form-group">
           <label for="employeeId">Employee</label>
           <select id="employeeId" formControlName="employeeId" class="form-control">
-            <option value="">-- Select Employee --</option>
+            <option value="">— Select Employee —</option>
             <option *ngFor="let emp of employees" [value]="emp.id">{{ emp.firstName }} {{ emp.lastName }} ({{ emp.position || emp.email }})</option>
           </select>
           <div *ngIf="leaveForm.get('employeeId')?.invalid && leaveForm.get('employeeId')?.touched" class="validation">Employee is required</div>
@@ -47,32 +47,14 @@ import { Employee } from '../../models/employee.model';
         </div>
 
         <div class="form-actions">
-          <button type="submit" [disabled]="leaveForm.invalid || submitting" class="btn btn-primary">
-            {{ submitting ? 'Submitting...' : 'Submit Leave Request' }}
+          <button type="submit" [disabled]="leaveForm.invalid || submitting" class="btn btn-primary btn-lg">
+            {{ submitting ? 'Submitting…' : 'Submit Leave Request' }}
           </button>
-          <a routerLink="/leave-requests" class="btn btn-secondary">Cancel</a>
+          <a routerLink="/leave-requests" class="btn btn-secondary btn-lg">Cancel</a>
         </div>
       </form>
     </div>
-  `,
-  styles: [`
-    .container { max-width: 700px; margin: 0 auto; padding: 2rem; }
-    h1 { margin-bottom: 0.5rem; }
-    .back-link { display: block; margin-bottom: 1.5rem; color: #2563eb; text-decoration: none; }
-    .form-row { display: flex; gap: 1rem; }
-    .form-row .form-group { flex: 1; }
-    .form-group { margin-bottom: 1.5rem; }
-    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-    .form-control { width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
-    select.form-control { background: white; }
-    .validation { color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem; }
-    .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
-    .btn { padding: 0.5rem 1.5rem; border-radius: 4px; cursor: pointer; border: none; font-size: 0.9rem; text-decoration: none; display: inline-block; }
-    .btn-primary { background: #2563eb; color: white; }
-    .btn-primary:disabled { background: #93c5fd; cursor: not-allowed; }
-    .btn-secondary { background: #6b7280; color: white; }
-    .error { color: #dc2626; padding: 1rem; background: #fef2f2; border-radius: 4px; margin-bottom: 1rem; }
-  `]
+  `
 })
 export class LeaveRequestFormComponent implements OnInit {
   leaveForm: FormGroup;

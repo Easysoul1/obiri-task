@@ -9,13 +9,13 @@ import { DepartmentService } from '../../services/department.service';
   standalone: true,
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
   template: `
-    <div class="container">
+    <div class="container page-enter">
+      <a routerLink="/departments" class="back-link">← Back to Departments</a>
       <h1>{{ isEdit ? 'Edit Department' : 'New Department' }}</h1>
-      <a routerLink="/departments" class="back-link">&larr; Back to Departments</a>
 
-      <div *ngIf="error" class="error">{{ error }}</div>
+      <div *ngIf="error" class="state-msg error" style="margin-bottom:var(--space-lg);text-align:left;">{{ error }}</div>
 
-      <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" class="form">
+      <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()" class="form-card">
         <div class="form-group">
           <label for="name">Department Name</label>
           <input id="name" formControlName="name" type="text" class="form-control" placeholder="e.g., Engineering">
@@ -26,33 +26,18 @@ import { DepartmentService } from '../../services/department.service';
 
         <div class="form-group">
           <label for="description">Description</label>
-          <textarea id="description" formControlName="description" class="form-control" rows="3" placeholder="Department description"></textarea>
+          <textarea id="description" formControlName="description" class="form-control" rows="3" placeholder="Department description (optional)"></textarea>
         </div>
 
         <div class="form-actions">
-          <button type="submit" [disabled]="departmentForm.invalid || submitting" class="btn btn-primary">
-            {{ submitting ? 'Saving...' : (isEdit ? 'Update Department' : 'Create Department') }}
+          <button type="submit" [disabled]="departmentForm.invalid || submitting" class="btn btn-primary btn-lg">
+            {{ submitting ? 'Saving…' : (isEdit ? 'Update Department' : 'Create Department') }}
           </button>
-          <a routerLink="/departments" class="btn btn-secondary">Cancel</a>
+          <a routerLink="/departments" class="btn btn-secondary btn-lg">Cancel</a>
         </div>
       </form>
     </div>
-  `,
-  styles: [`
-    .container { max-width: 600px; margin: 0 auto; padding: 2rem; }
-    h1 { margin-bottom: 0.5rem; }
-    .back-link { display: block; margin-bottom: 1.5rem; color: #2563eb; text-decoration: none; }
-    .form-group { margin-bottom: 1.5rem; }
-    label { display: block; margin-bottom: 0.5rem; font-weight: 500; }
-    .form-control { width: 100%; padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px; font-size: 1rem; box-sizing: border-box; }
-    .validation { color: #dc2626; font-size: 0.8rem; margin-top: 0.25rem; }
-    .form-actions { display: flex; gap: 1rem; margin-top: 2rem; }
-    .btn { padding: 0.5rem 1.5rem; border-radius: 4px; cursor: pointer; border: none; font-size: 0.9rem; text-decoration: none; display: inline-block; }
-    .btn-primary { background: #2563eb; color: white; }
-    .btn-primary:disabled { background: #93c5fd; cursor: not-allowed; }
-    .btn-secondary { background: #6b7280; color: white; }
-    .error { color: #dc2626; padding: 1rem; background: #fef2f2; border-radius: 4px; margin-bottom: 1rem; }
-  `]
+  `
 })
 export class DepartmentFormComponent implements OnInit {
   departmentForm: FormGroup;
