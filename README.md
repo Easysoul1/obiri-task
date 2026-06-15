@@ -21,6 +21,8 @@ erDiagram
     Employee ||--o{ Approval : approves
 ```
 
+![ER Diagram](obiri-er-diagram.png)
+
 ## Features
 
 - **Departments** — Create, Read, Update, Delete departments
